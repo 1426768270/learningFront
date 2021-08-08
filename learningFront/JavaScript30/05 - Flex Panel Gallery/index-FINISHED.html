@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Flex Panels 💪</title>
+    <link href='googlefont.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <style>
+        html {
+            box-sizing: border-box;
+            background: #ffc600;
+            font-family: 'helvetica neue';
+            font-size: 20px;
+            font-weight: 200;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        *, *:before, *:after {  /* 元素前后插入 */
+            box-sizing: inherit;
+        }
+
+        .panels {
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .panel {
+            background: #6B0F9C;
+            box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            align-items: center;
+            transition: 
+                font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+                flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+                background 0.2s;
+            font-size: 20px;
+            background-size: cover;
+            background-position: center;
+            flex: 1;                    /* flex item占一行 */
+            display: flex;              /* 自己成为弹性容器 */  
+            flex-direction: column;     /* 在纵轴上分布 */
+            justify-content: center;    /* 纵轴居中 */
+            align-items: center;        /* 横轴居中 */
+        }
+
+        .panel1 { background-image:url(img/photo-1465188162913-8fb5709d6d57.jpg); }
+        .panel2 { background-image:url(img/flashlight.jpg); }
+        .panel3 { background-image:url(img/photo-1443891238287-325a8fddd0f7.jpg); }
+        .panel4 { background-image:url(img/photo-1442522772768-9032b6d10e3e.jpg); }
+        .panel5 { background-image:url(img/photo-1465156799763-2c087c332922.jpg); }
+
+        .panel > * {        /* 只改div 第一代 */
+            margin: 0;
+            width: 100%;
+            transition: transform 0.5s;
+            flex: 1;            /* flex item占一列，均匀分布 */
+            display: flex;
+            justify-content: center;    /* 纵轴居中 */
+            align-items: center;        /* 横轴居中 */
+        }
+
+        .panel > *:first-child {
+            transform: translateY(-100%);
+        }
+
+        .panel > *:last-child {
+            transform: translateY(100%);
+        }
+
+        .panel p {          /*  所有  */
+            text-transform: uppercase;
+            font-family: 'Amatic SC', cursive;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+            font-size: 2em;
+        }
+
+
+        .panel p:nth-child(2) {     /*第二个子元素变成*/
+            font-size: 4em;
+        }
+
+        .panel.open {
+            flex: 5;
+            font-size: 40px;
+        }
+
+        .panel.open-active > *{     /* 所有子元素都归0 */
+            transform: translateY(0);
+        }
+
+    </style>
+
+    <div class="panels">
+        <div class="panel panel1">
+            <p>Hey</p>
+            <p>Let's</p>
+            <p>Dance</p>
+        </div>
+        <div class="panel panel2">
+            <p>Give</p>
+            <p>Take</p>
+            <p>Receive</p>
+        </div>
+        <div class="panel panel3">
+            <p>Experience</p>
+            <p>It</p>
+            <p>Today</p>
+        </div>
+        <div class="panel panel4">
+            <p>Give</p>
+            <p>All</p>
+            <p>You can</p>
+        </div>
+        <div class="panel panel5">
+            <p>Life</p>
+            <p>In</p>
+            <p>Motion</p>
+        </div>
+    </div>
+
+    <script>
+
+        const panels = document.querySelectorAll(".panel");
+
+        function toggleOpen() {
+            console.log('Hello');
+            this.classList.toggle('open');
+        }
+
+        function toggleAcitve(e) {
+            console.log(e.propertyName);
+            if (e.propertyName.includes('flex')){       /*包含flex才执行*/
+                this.classList.toggle('open-active')
+            }
+        }
+
+        //添加点击事件
+        panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+        panels.forEach(panel => panel.addEventListener('transitionend', toggleAcitve));
+
+    </script>
+
+
+
+</body>
+
+</html>

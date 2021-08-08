@@ -1,0 +1,54 @@
+html {
+    font-size: 10px;
+    background: url('./background.jpg') bottom center;
+    background-size: cover;         /* 把背景图片放大到适合元素容器的尺寸，图片比例不变，但是要注意，超出容器的部分可能会裁掉。 */
+}
+
+body,html{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.keys{
+    display: flex;                  /* 弹性盒子 */
+    flex: 1;                        /* 给div设置等宽，让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容 */
+    min-height: 100vh;              /* 1vh等于视口高度的1%。 */
+    align-items: center;            /*  弹性盒子flex 元素位于容器的中心 
+    设置弹性盒子元素在垂直方向上（纵轴）的对齐方式。 */
+    justify-content: center;        /*  弹性盒子flex 元素位于容器的中心 
+    设置弹性盒子元素在主轴（横轴）的对齐方式 */
+}
+
+.key{
+    border: .4rem solid black;      /* rem是直接相对于根元素 相对单位
+    优势：父元素文字可能不一致，但是整个页面只有一个html，可以很好来控制整个页面的大小比例*/
+    border-radius: .5rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+    padding: 1rem .5rem;
+    transition: all .07s ease;      /* 给本key的所有属性都加过度效果,由快到慢逐渐变慢*/
+    width:  10rem;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 1rem black;
+}
+
+.playing{
+    transform: scale(1.1);
+    border-color: #ffc600;
+    box-shadow: 0 0 1rem #ffc600;
+}
+
+kbd {
+    display: block;
+    font-size: 4rem;
+}
+
+.sound{
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: .1rem;      /* 属性设置字符之间的空白。*/
+    color: #ffc600;
+}

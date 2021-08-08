@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5 Canvas</title>
+</head>
+
+<body>
+
+    <canvas id="draw" width="800" height="800"></canvas>
+    <script>
+        const canvas = document.querySelector('#draw');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const ctx = canvas.getContext('2d');    //h5通过context对象
+        console.log(ctx);
+        ctx.strokeStyle = '#BADA55';     //颜色
+        ctx.lineJoin = 'round'  //线交叉
+        ctx.lineCap = 'round'   //线结尾
+        ctx.lineWidth = 50;
+
+
+        let isDrawing = false;       //开关变量
+        let lastX = 0;
+        let lastY = 0;      //起始点
+        let hue = 0;        //色调
+        let direction = true    //粗细控制
+        //画线函数
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.strokeStyle = `hsl(${hue},100%,50%)`;        //hsl 颜色，饱和度，亮度
+            ctx.beginPath();    //开始路径
+            ctx.moveTo(lastX, lastY);    //移动到起始点
+            ctx.lineTo(e.offsetX, e.offsetY)    //画到
+            ctx.stroke();       //描边
+            //第一次画线结束后
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+            //颜色变化
+            hue++;
+            if (hue >= 360) {
+                hue = 0;
+            }
+            //线条变化
+            if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+                direction = !direction;
+            }
+
+            direction ? ctx.lineWidth++ : ctx.lineWidth--;
+
+            console.log(e);
+        }
+
+        //鼠标监听
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;  //按下左键
+            //起始坐标位置
+            [lastX, lastY] = [e.offsetX, e.offsetY]
+        });
+        canvas.addEventListener('mouseup', () => isDrawing = false);         //松开左键
+        canvas.addEventListener('mouseout', () => isDrawing = false);         //移除画布
+
+    </script>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+        }
+    </style>
+</body>
+
+</html>

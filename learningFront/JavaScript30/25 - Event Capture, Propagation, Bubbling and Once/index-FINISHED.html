@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Understanding JavaScript's Capture</title>
+</head>
+
+<body class="bod">
+
+    <div class="one">
+        <div class="two">
+            <div class="three">
+            </div>
+        </div>
+    </div>
+
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        div {
+            width: 100%;
+            padding: 100px;
+        }
+
+        .one {
+            background: thistle;
+        }
+
+        .two {
+            background: mistyrose;
+        }
+
+        .three {
+            background: coral;
+        }
+    </style>
+
+    <button></button>
+    <script>
+        const divs = document.querySelectorAll('div');
+        const three = document.querySelector('.three');
+
+        function log(e) {
+            // e.stopPropagation();
+            console.log(this);
+        }
+
+        //事件的冒泡和捕获， 是指事件在元素上被触发的顺序，事件本身不会传递
+        divs.forEach(div =>  div.addEventListener('click', log, {
+            capture : false,
+            once : false
+        }));
+        //three.addEventListener('click', log)
+        //事件的执行，必须要有相应的动作来触发，触发动作不会传递
+
+    </script>
+</body>
+
+</html>

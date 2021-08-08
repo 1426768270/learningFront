@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mouse Shadow</title>
+</head>
+
+<body>
+
+    <div class="hero">
+        <h1 contenteditable>Coding!</h1>
+    </div>
+
+    <style>
+        html {
+            background: yellow;
+            font-family: sans-serif;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        h1 {
+            text-shadow: 10px 10px 0 rgba(0, 0, 0, 0.4);
+            font-size: 100px;
+        }
+    </style>
+
+    <script>
+        const code = document.querySelector('.hero');
+        const text = code.querySelector('h1');
+        const r = 100;
+
+        //影子效果
+        function shadow(e) {
+            /* const width = code.offsetWidth;
+            const height = code.offsetHeight; */
+            const {offsetWidth : width, offsetHeight : height} = code;
+            let {offsetX : mousex , offsetY : mousey} = e;           
+            
+            if (this !== e.target){
+                mousex = mousex + e.target.offsetLeft;
+                mousey = mousey + e.target.offsetTop;
+            }
+
+            const xR = Math.round(( mousex / width) * r - r / 2);    //50%
+            const yR = Math.round(( mousey / height) * r - r / 2);    //50%
+
+            text.style.textShadow = `
+                ${xR}px ${yR}px 0 rgba(0, 0, 0, 0.4)
+            `;
+            console.log(text.style.textShadow)
+        }
+
+        code.addEventListener('mousemove', shadow);
+
+    </script>
+</body>
+
+</html>

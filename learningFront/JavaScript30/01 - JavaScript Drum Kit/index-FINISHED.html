@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Drum Kit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--<kbd> 标签定义键盘文本。-->
+    <div class="keys">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">clap</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">hihat</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">kick</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">openhat</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">boom</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">ride</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">snare</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">tom</span>
+        </div>
+        <div data-key="65" class="key">
+            <kbd>L</kbd>
+            <span class="sound">tink</span>
+        </div>
+    </div>
+
+    <audio data-key="65" src="sounds/clap.wav"></audio>
+    <audio data-key="83" src="sounds/hihat.wav"></audio>
+    <audio data-key="68" src="sounds/kick.wav"></audio>
+    <audio data-key="70" src="sounds/openhat.wav"></audio>
+    <audio data-key="71" src="sounds/boom.wav"></audio>
+    <audio data-key="72" src="sounds/ride.wav"></audio>
+    <audio data-key="74" src="sounds/snare.wav"></audio>
+    <audio data-key="75" src="sounds/tom.wav"></audio>
+    <audio data-key="76" src="sounds/tink.wav"></audio>
+
+    <script>
+        // 1. 按下按键的时候，播放对应的声音
+        function playSound(e) {
+            //获得对应的声音，字符串模板
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            //获得对应的a按键，字符串模板
+            const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            //未定义键为空      
+            if (!audio) return;
+            //播放时间为0，每次都重新播放
+            audio.currentTime = 0;
+            //播放声音     
+            audio.play();
+            console.log([audio]);
+
+            // 2. 按下该按键的时候，改变按键的显示效果
+            key.classList.add('playing');
+
+            /*  setTimeout(function() {
+                 key.classList.remove('playing');
+             }, 70); */
+        }
+
+        // 3. 按键的效果转换之后，恢复到最初的状态
+        function removePlaying(e) {
+            console.log(e);
+            //只控制transform的事件
+            if (e.propertyName !== 'transform') return;
+            console.log(this);
+            //去除样式
+            this.classList.remove('playing');
+        }
+
+        //获取所有的div
+        const keys = document.querySelectorAll('.key');
+        //遍历所有的key，加监听   
+        keys.forEach(key => {
+            //变化完成之后，执行对应函数
+            key.addEventListener('transitionend', removePlaying);
+        })
+
+        //全局监听键盘按下之后的事件
+        window.addEventListener('keydown', playSound)
+
+    </script>
+</body>
+
+</html>

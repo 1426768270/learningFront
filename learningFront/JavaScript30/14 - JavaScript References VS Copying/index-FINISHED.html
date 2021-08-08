@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Reference VS Copy</title>
+</head>
+
+<body>
+
+    <script>
+        // start with strings, numbers and booleans
+        let name = 'Arvin';
+        let name2 = name;     //把name cope 给name2, 有2块区域
+        name = '苹果'
+        console.log(name, name2)
+
+        let age = 23;
+        let age2 = age;
+        age = 34;
+        console.log(age, age2);     //一样
+
+        //布尔也是一样
+
+        // Let's say we have an array
+        const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+        const team = players;
+        //team[3] = 'aa';             //两个都改变了 引用 共同指向一块区域
+
+
+        // and we want to make a copy of it.
+        const team2 = players.slice();
+        //team[3] = 'aa';
+        console.log(team2);
+
+        // You might think we can just do something like this:
+        const team3 = Array.from(players);
+        //team[3] = 'aa';
+        console.log(team3);
+
+        const team4 = [...players];
+        //team[3] = 'aa';
+        console.log(team4);
+
+        const team5 = [].concat(players);
+        //team[3] = 'aa';
+        console.log(team5);
+
+        // however what happens when we update that array?
+
+        // now here is the problem!
+
+        // oh no - we have edited the original array too!
+
+        // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+        // So, how do we fix this? We take a copy instead!
+
+        // one way
+
+        // or create a new array and concat the old one in
+
+        // or use the new ES6 Spread
+
+        // now when we update it, the original one isn't changed
+
+        // The same thing goes for objects, let's say we have a person object
+
+        // with Objects
+        const person = {
+            name: 'Wes Bos',
+            age: 80
+        };
+
+        // and think we make a copy:
+        const dev = person;
+        //person.name = 'puput'
+        console.log(dev);
+
+        // how do we take a copy instead?
+        const dev2 = Object.assign({}, person);
+        //person.name = 'puput'
+        console.log(dev2);
+
+        // We will hopefully soon see the object ...spread
+        const dev3 = { ...person };
+        //person.name = 'puput'         
+        console.log(dev3);
+
+        // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+        //上面都是浅复制
+        const author = {
+            name: 'Wes Bos',
+            age: 80,
+            social : {
+                wechat : 'Alice Lala',
+                facebook : 'athor.alice'
+            }
+        };
+        const au2 = Object.assign({}, author)
+        //au2.name = 'aaa';
+        //au2.social.wechat = 'bbb';
+        console.log(author);        //内部还是引用
+
+        const au3 = JSON.parse(JSON.stringify(author))
+        au3.name = 'aaa';
+        au3.social.wechat = 'bbb';
+        console.log(author);        //内部还是引用
+
+    </script>
+
+</body>
+
+</html>
